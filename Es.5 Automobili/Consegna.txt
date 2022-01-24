@@ -1,15 +1,12 @@
 SCHEMA RELAZIONALE:
 
-
 AUTO (#Targa, Marca, Cilindrata, Potenza, CodF*, CodAss*)
 PROPRIETARI (#CodF, Nome, Residenza)
 ASSICURAZIONI (#CodAss, Nome, Sede)
 SINISTRO (#CodS, Località, Data)
 AUTOCOINVOLTE (#CodS*, #Targa*, ImportoDelDanno)
 
-
 Realizzare le CREATE TABLE, le INSERT e provare a scrivere almeno 3 UPDATE. Poi risolvere le seguenti query:
-
 
 1- Targa e Marca delle Auto di cilindrata superiore a 2000 cc o di potenza superiore a 120 CV
 2- Nome del proprietario e Targa delle Auto di cilindrata superiore a 2000 cc oppure di potenza
