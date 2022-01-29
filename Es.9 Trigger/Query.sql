@@ -1,0 +1,1 @@
+﻿INSERT INTO Auto VALUES('AA234EE',100,23000.00,'Corsa','Bianco','Opel','Benzina')
