@@ -15,69 +15,81 @@ namespace _12_Banche_StoredProcedure_
 
         private void btnSP1_Click(object sender, EventArgs e)
         {
+            string sql = "cercaFiliali";
             using (SqlConnection con = new SqlConnection(CONNECTION_STRING))
             {
                 con.Open();
-                string sql = "[Procedure]";
 
                 using (SqlCommand cmd = new SqlCommand(sql, con))
                 {
-                    SqlParameter data = new SqlParameter();
-                    //data.ParameterName = "numero";
+                    SqlParameter nomeBanca = new SqlParameter();
+                    nomeBanca.Value = txtBanca.Text;
+                    nomeBanca.ParameterName = "nomeBanca";
+                    nomeBanca.Direction = ParameterDirection.Input;
+                    nomeBanca.DbType = DbType.String;
+                    nomeBanca.Size = 50;
+                    cmd.Parameters.Add(nomeBanca);
 
-                    //data.Value = numero;
-                    data.Direction = ParameterDirection.Input;
-                    data.DbType = DbType.Int32;
-                    cmd.Parameters.Add(data);
+                    SqlParameter comune = new SqlParameter();
+                    comune.Value = txtComune.Text;
+                    comune.ParameterName = "comune";
+                    comune.Direction = ParameterDirection.Input;
+                    comune.DbType = DbType.String;
+                    comune.Size = 50;
+                    cmd.Parameters.Add(comune);
 
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        string s = "";
-
-                        for (int i = 0; i < reader.FieldCount; i++)
-                        {
-                            s += reader.GetValue(i) + " ";
-                        }
-                    }
+                    int ris = cmd.ExecuteNonQuery();
+                    MessageBox.Show("Risultato cercaFiliali: " + ris);
                 }
             }
         }
 
         private void btnSP2_Click(object sender, EventArgs e)
         {
+            string sql = "comuneFiliali";
             using (SqlConnection con = new SqlConnection(CONNECTION_STRING))
             {
                 con.Open();
-                string sql = "[Visulizza]";
 
                 using (SqlCommand cmd = new SqlCommand(sql, con))
                 {
-                    SqlParameter data = new SqlParameter();
-                    //data.ParameterName = "comune";
+                    SqlParameter nomeBanca = new SqlParameter();
+                    nomeBanca.Value = txtBanca.Text;
+                    nomeBanca.ParameterName = "nomeBanca";
+                    nomeBanca.Direction = ParameterDirection.Input;
+                    nomeBanca.DbType = DbType.String;
+                    nomeBanca.Size = 50;
+                    cmd.Parameters.Add(nomeBanca);
 
-                    //data.Value = v;
-                    data.Direction = ParameterDirection.Input;
-                    data.DbType = DbType.String;
-                    cmd.Parameters.Add(data);
+                    SqlParameter totale = new SqlParameter();
+                    totale.ParameterName = "totale";
+                    totale.Direction = ParameterDirection.Output;
+                    totale.DbType = DbType.Int32;
+                    cmd.Parameters.Add(totale);
+
+                    SqlParameter comune = new SqlParameter();
+                    comune.Value = txtComune.Text;
+                    comune.ParameterName = "comune";
+                    comune.Direction = ParameterDirection.Input;
+                    comune.DbType = DbType.String;
+                    comune.Size = 50;
+                    cmd.Parameters.Add(comune);
 
                     cmd.CommandType = CommandType.StoredProcedure;
+                    int ris = cmd.ExecuteNonQuery();
 
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    string s = "";
-                    while (reader.Read())
+                    /*while (ris.Read())
                     {
-
-
-                        for (int i = 0; i < reader.FieldCount; i++)
+                        string s = "";
+                        for (int i = 0; i < ris.FieldCount; i++)
                         {
-                            s += reader.GetValue(i) + " ";
+                            s += ris.GetValue(i) + " - ";
                         }
-                    }
-                    Console.WriteLine(s);
+                        MessageBox.Show(s.ToString(),"Risultato Stored");
+                    }*/
+                    MessageBox.Show("Totale filiali: " + cmd.Parameters["totale"].Value);
                 }
             }
         }
